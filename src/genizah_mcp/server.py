@@ -142,7 +142,12 @@ def create_server(
                 ):
                     sys_id = row["locator"].get("sys_id")
                     if isinstance(sys_id, str):
-                        links.append(page_uri(sys_id, row["uid"]))
+                        try:
+                            links.append(page_uri(sys_id, row["uid"]))
+                        except GenizahAPIError:
+                            # Upstream can return a row without a resolvable IE page locator.
+                            # Preserve the candidate but do not advertise an invalid page resource.
+                            continue
             output = {
                 "schema_version": 1,
                 "upstream_schema_version": body.get("schema_version"),
