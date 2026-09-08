@@ -1,0 +1,52 @@
+[project]
+name = "genizahsearch-mcp"
+version = "0.1.0"
+description = "Unofficial, read-only MCP adapter for the public GenizahSearch API"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "CC-BY-NC-SA-4.0" }
+authors = [{ name = "GenizahSearch MCP contributors" }]
+dependencies = [
+  "httpx>=0.28.1",
+  "mcp>=1.12.0",
+  "pydantic>=2.10.0",
+  "pydantic-settings>=2.7.0",
+]
+
+[project.scripts]
+genizah-mcp = "genizah_mcp.__main__:main"
+
+[dependency-groups]
+dev = [
+  "mypy>=1.13.0",
+  "pre-commit>=4.0.0",
+  "pytest>=8.3.0",
+  "pytest-asyncio>=0.25.0",
+  "respx>=0.22.0",
+  "ruff>=0.8.0",
+]
+
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/genizah_mcp"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+markers = ["live: opt-in test against the public GenizahSearch service"]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "ASYNC"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["genizah_mcp"]
