@@ -60,3 +60,5 @@ GENIZAH_RUN_LIVE_TESTS=1 uv run pytest -m live -q
 ```
 
 Live tests are opt-in, sequential, and depend on public upstream availability. Troubleshooting: wait for `rate_limited` responses rather than retrying automatically; reduce query scope for busy searches; use chunk parallels when passage is unavailable; raise operator timeout configuration only with care.
+
+The official MCP SDK client is exercised over stdio in protocol tests, including a live `search_manuscripts` → `browse_page` round trip. No desktop MCP client was available on the implementation machine for a UI-specific configuration test.
